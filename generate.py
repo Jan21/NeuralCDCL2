@@ -77,21 +77,21 @@ def main():
     output_dir = Path(args.output)
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    print("=== GENERATING IN-DISTRIBUTION DATASET (5-15 variables) ===")
-    iid_data = collect_traces(
-        var_min=5,
-        var_max=15,
-        target_count=args.iid_target,
-        verify=not args.no_verify,
-        use_pysat_verification=not args.no_pysat
-    )
+    # print("=== GENERATING IN-DISTRIBUTION DATASET (5-15 variables) ===")
+    # iid_data = collect_traces(
+    #     var_min=5,
+    #     var_max=15,
+    #     target_count=args.iid_target,
+    #     verify=not args.no_verify,
+    #     use_pysat_verification=not args.no_pysat
+    # )
 
-    print(f"\nCollected {len(iid_data['solve_traces'])} solve traces")
-    print(f"Collected {len(iid_data['up_traces'])} UP traces")
-    print(f"Collected {len(iid_data['ac_traces'])} AC traces")
-    print(f"Collected {len(iid_data['nested_traces'])} problems")
+    # print(f"\nCollected {len(iid_data['solve_traces'])} solve traces")
+    # print(f"Collected {len(iid_data['up_traces'])} UP traces")
+    # print(f"Collected {len(iid_data['ac_traces'])} AC traces")
+    # print(f"Collected {len(iid_data['nested_traces'])} problems")
 
-    create_datasets(iid_data, output_dir, test_size=args.test_size, prefix="iid_")
+    # create_datasets(iid_data, output_dir, test_size=args.test_size, prefix="iid_")
 
     print("\n=== GENERATING OUT-OF-DISTRIBUTION DATASET (16-25 variables) ===")
     ood_data = collect_traces(

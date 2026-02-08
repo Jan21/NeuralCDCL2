@@ -1,0 +1,52 @@
+model:
+  d_model: 64
+  n_layers: 2
+  n_heads: 4
+  d_ff: 128
+  max_seq_len: 4096
+
+training:
+  batch_size: 32
+  gradient_accumulation_steps: 1
+  max_epochs: 1
+  lr: 0.001
+  weight_decay: 0.01
+  warmup_steps: 10
+  precision: "bf16-true"
+  gradient_clip_val: 1.0
+  val_check_interval: 50
+  num_workers: 4
+  val_batch_size: 16
+
+data:
+  train_path: output/train.json
+  tokenizer_path: models/tokenizer.json
+  preprocessed_dir: output/preprocessed
+  train_max_seq_len: 1024
+  val_max_seq_len: ${model.max_seq_len}
+  max_val_samples: 64
+  test_sets:
+    iid_combined: output/iid_test.json
+    iid_solve: output/iid_test_solve.json
+    iid_up: output/iid_test_up.json
+    iid_ac: output/iid_test_ac.json
+    ood_combined: output/ood_test.json
+    ood_solve: output/ood_test_solve.json
+    ood_up: output/ood_test_up.json
+    ood_ac: output/ood_test_ac.json
+
+wandb:
+  project: neural-cdcl
+  entity: petr-hyner10
+  name: test-wandb-fix
+  tags:
+    - test
+    - wandb-fix
+  table_sample_size: 10
+
+checkpointing:
+  dirpath: checkpoints/test_wandb
+  monitor: iid/combined/exact_match
+  mode: max
+  save_top_k: 1
+  save_last: false
