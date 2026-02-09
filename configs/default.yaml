@@ -3,11 +3,11 @@ model:
   n_layers: 12
   n_heads: 8
   d_ff: 1024
-  max_seq_len: 4096
+  max_seq_len: 8192
 
 training:
-  batch_size: 256
-  gradient_accumulation_steps: 1
+  batch_size: 128
+  gradient_accumulation_steps: 2
   max_epochs: 20
   lr: 0.001
   weight_decay: 0.01
@@ -22,7 +22,7 @@ data:
   train_path: output/train.json
   tokenizer_path: tokenizer/tokenizer.json
   preprocessed_dir: output/preprocessed
-  train_max_seq_len: 2048
+  train_max_seq_len: 4096
   val_max_seq_len: ${model.max_seq_len}
   max_val_samples: 128
   test_sets:
@@ -38,7 +38,7 @@ data:
 wandb:
   project: neural-cdcl
   entity: petr-hyner10
-  name: cdcl-d${model.d_model}-L${model.n_layers}-H${model.n_heads}-seq${model.max_seq_len}-rope
+  name: cdcl-d${model.d_model}-L${model.n_layers}-H${model.n_heads}-seq${model.max_seq_len}-bs${training.batch_size}-acc${training.gradient_accumulation_steps}
   tags:
     - cdcl
     - transformer
